@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSC 416 – Management Science Study Guide</title>
+<style>
+:root{
+  --bg:#f7f7fb; --card:#ffffff; --text:#1c1c28; --muted:#5c5c6e;
+  --border:#e4e4ec; --accent:#5b47e0; --accent2:#00a884; --warn:#e0a030;
+  --danger:#e0475b; --code-bg:#1c1c28; --code-text:#e9e9f5; --shadow:0 2px 10px rgba(20,20,40,.06);
+  --radius:14px;
+}
+body.dark{
+  --bg:#111117; --card:#191922; --text:#eeeef5; --muted:#a3a3b8;
+  --border:#2a2a38; --accent:#8f7dfb; --accent2:#3ee0b8; --warn:#f0bb55;
+  --danger:#ff7a8a; --code-bg:#0c0c12; --code-text:#dcdcf0; --shadow:0 2px 14px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.6; transition:background .25s,color .25s;
+  padding-bottom:60px;
+}
+a{color:var(--accent);}
+header.topbar{
+  position:sticky; top:0; z-index:50; background:var(--card); border-bottom:1px solid var(--border);
+  backdrop-filter:blur(8px);
+}
+.topbar-inner{
+  display:flex; align-items:center; gap:8px; padding:10px 12px; overflow-x:auto; white-space:nowrap;
+  scrollbar-width:none;
+}
+.topbar-inner::-webkit-scrollbar{display:none;}
+.brand{font-weight:800; font-size:.95rem; color:var(--text); flex-shrink:0; padding-right:6px;}
+.navlink{
+  font-size:.8rem; color:var(--muted); text-decoration:none; padding:6px 10px; border-radius:20px;
+  flex-shrink:0; border:1px solid transparent;
+}
+.navlink:hover{background:var(--border); color:var(--text);}
+.spacer{flex:1;}
+#darkToggle{
+  border:1px solid var(--border); background:var(--bg); color:var(--text); border-radius:20px;
+  padding:6px 12px; font-size:.8rem; cursor:pointer; flex-shrink:0;
+}
+.hero{padding:34px 18px 20px; max-width:880px; margin:0 auto;}
+.hero .kicker{color:var(--accent); font-weight:700; letter-spacing:.5px; font-size:.78rem; text-transform:uppercase;}
+.hero h1{font-size:1.9rem; margin:.3rem 0 .6rem; line-height:1.25;}
+.hero p.sub{color:var(--muted); font-size:.95rem; margin:0 0 14px;}
+.meta-row{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;}
+.badge{
+  background:var(--border); color:var(--muted); font-size:.72rem; padding:4px 10px; border-radius:20px;
+  font-weight:600;
+}
+.howto{
+  background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px;
+  font-size:.85rem; color:var(--muted); box-shadow:var(--shadow);
+}
+.howto b{color:var(--text);}
+main{max-width:880px; margin:0 auto; padding:0 18px;}
+section.module{padding:34px 0 10px; border-top:1px solid var(--border); margin-top:14px;}
+.module-tag{
+  display:inline-flex; align-items:center; gap:8px; font-size:.76rem; font-weight:700; color:var(--accent);
+  text-transform:uppercase; letter-spacing:.4px; margin-bottom:6px;
+}
+.module-num{
+  width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff; display:inline-flex;
+  align-items:center; justify-content:center; font-size:.78rem;
+}
+h2.module-title{font-size:1.5rem; margin:4px 0 4px;}
+p.module-desc{color:var(--muted); font-size:.9rem; margin:0 0 20px;}
+h3.subhead{font-size:1.12rem; margin:26px 0 8px; color:var(--text);}
+h3.subhead .num{color:var(--accent); margin-right:6px;}
+p{font-size:.94rem;}
+.card{
+  background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px;
+  margin:14px 0; box-shadow:var(--shadow);
+}
+.plain{
+  background:linear-gradient(135deg, rgba(91,71,224,.08), rgba(91,71,224,.02));
+  border:1px solid rgba(91,71,224,.25); border-radius:var(--radius); padding:14px 16px; margin:14px 0;
+  font-size:.9rem;
+}
+.plain .label{font-weight:700; color:var(--accent); font-size:.82rem; margin-bottom:4px; display:block;}
+.real{
+  background:linear-gradient(135deg, rgba(0,168,132,.09), rgba(0,168,132,.02));
+  border:1px solid rgba(0,168,132,.3); border-radius:var(--radius); padding:14px 16px; margin:14px 0;
+  font-size:.9rem;
+}
+.real .label{font-weight:700; color:var(--accent2); font-size:.82rem; margin-bottom:4px; display:block;}
+.warnbox{
+  background:linear-gradient(135deg, rgba(224,160,48,.1), rgba(224,160,48,.02));
+  border:1px solid rgba(224,160,48,.35); border-radius:var(--radius); padding:14px 16px; margin:14px 0;
+  font-size:.9rem;
+}
+.warnbox .label{font-weight:700; color:var(--warn); font-size:.82rem; margin-bottom:4px; display:block;}
+.formula{
+  background:var(--code-bg); color:var(--code-text); border-radius:12px; padding:14px 16px; margin:14px 0;
+  font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace; font-size:.85rem; overflow-x:auto;
+}
+table{width:100%; border-collapse:collapse; margin:14px 0; font-size:.85rem;}
+th,td{border:1px solid var(--border); padding:8px 10px; text-align:left; vertical-align:top;}
+th{background:var(--border); font-weight:700;}
+.tbl-wrap{overflow-x:auto; margin:14px 0;}
+.tbl-wrap table{margin:0; min-width:480px;}
+details{
+  background:var(--card); border:1px solid var(--border); border-radius:var(--radius); margin:14px 0;
+  overflow:hidden;
+}
+summary{
+  padding:12px 16px; cursor:pointer; font-weight:600; font-size:.88rem; list-style:none; display:flex;
+  align-items:center; gap:8px; color:var(--accent);
+}
+summary::-webkit-details-marker{display:none;}
+summary:before{content:"▶"; font-size:.7rem; transition:transform .2s;}
+details[open] summary:before{transform:rotate(90deg);}
+.details-body{padding:0 16px 16px; font-size:.88rem;}
+.details-body pre{margin:0; white-space:pre-wrap;}
+ul,ol{padding-left:1.2rem; font-size:.94rem;}
+li{margin-bottom:4px;}
+.chip-row{display:flex; flex-wrap:wrap; gap:8px; margin:10px 0;}
+.chip{background:var(--border); padding:5px 12px; border-radius:20px; font-size:.78rem; font-weight:600;}
+.footer-note{
+  text-align:center; color:var(--muted); font-size:.8rem; padding:40px 18px 10px;
+}
+.timeline{display:flex; flex-direction:column; gap:0; margin:20px 0;}
+.tl-item{display:flex; gap:14px; position:relative; padding-bottom:22px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-dot-col{display:flex; flex-direction:column; align-items:center;}
+.tl-dot{width:14px; height:14px; border-radius:50%; background:var(--accent); flex-shrink:0; margin-top:4px;}
+.tl-line{flex:1; width:2px; background:var(--border); margin-top:2px;}
+.tl-content{flex:1;}
+.tl-year{font-weight:700; color:var(--accent); font-size:.85rem;}
+.tl-text{font-size:.87rem; color:var(--muted); margin-top:2px;}
+.quiz-btns{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;}
+.qbtn{
+  border:1px solid var(--border); background:var(--bg); color:var(--text); padding:7px 14px; border-radius:20px;
+  font-size:.82rem; cursor:pointer;
+}
+.qbtn.correct{background:var(--accent2); border-color:var(--accent2); color:#04231b;}
+.qbtn.wrong{background:var(--danger); border-color:var(--danger); color:#2a0006;}
+.qbtn[disabled]{cursor:default; opacity:.85;}
+.flow{display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin:16px 0;}
+.flow-step{
+  background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px 14px;
+  font-size:.82rem; font-weight:600; flex:1; min-width:130px; text-align:center;
+}
+.flow-arrow{color:var(--accent); font-size:1.1rem; flex-shrink:0;}
+.payoff-table td, .payoff-table th{text-align:center;}
+.payoff-highlight{background:rgba(224,71,91,.15); font-weight:700;}
+svg text{font-family:inherit; fill:var(--text);}
+.svg-wrap{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:10px; margin:16px 0; overflow-x:auto;}
+.svg-wrap svg{display:block; margin:0 auto; max-width:100%; height:auto;}
+.dss-grid{display:grid; grid-template-columns:1fr; gap:10px; margin:16px 0;}
+@media(min-width:600px){.dss-grid{grid-template-columns:1fr 1fr;}}
+.dss-box{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px;}
+.dss-box h4{margin:0 0 6px; font-size:.92rem; color:var(--accent);}
+.dss-box p{margin:0; font-size:.82rem; color:var(--muted);}
+.control-row{display:flex; align-items:center; gap:10px; margin:10px 0; flex-wrap:wrap;}
+.control-row label{font-size:.82rem; color:var(--muted); font-weight:600;}
+input[type=range]{flex:1; min-width:140px; accent-color:var(--accent);}
+.val-pill{background:var(--border); padding:3px 10px; border-radius:20px; font-size:.78rem; font-weight:700;}
+.legend{display:flex; gap:16px; font-size:.78rem; color:var(--muted); margin-top:6px; flex-wrap:wrap;}
+.legend span{display:inline-flex; align-items:center; gap:5px;}
+.dot{width:10px; height:10px; border-radius:50%; display:inline-block;}
+.toc-jump{font-size:.78rem; color:var(--muted); text-align:right; margin-top:-6px;}
+.toc-jump a{color:var(--accent); text-decoration:none;}
+.exam-card{border-left:4px solid var(--accent);}
+.exam-tag{font-size:.68rem; font-weight:700; color:var(--accent2); text-transform:uppercase; letter-spacing:.4px;}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="brand">CSC 416</span>
+    <a class="navlink" href="#m1">Intro</a>
+    <a class="navlink" href="#m2">Decisions</a>
+    <a class="navlink" href="#m3">LP</a>
+    <a class="navlink" href="#m4">Transport</a>
+    <a class="navlink" href="#m5">Game Theory</a>
+    <a class="navlink" href="#m6">Forecasting</a>
+    <a class="navlink" href="#m7">DSS & AI</a>
+    <a class="navlink" href="#exam">Exam Prep</a>
+    <span class="spacer"></span>
+    <button id="darkToggle" onclick="toggleDark()">🌙 Dark</button>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="kicker">B.Sc. Computer Science · CSC 416</div>
+  <h1>Management Science — A Plain-English Study Guide</h1>
+  <p class="sub">Decision-making, optimization, and forecasting tools for computer scientists — with real IT/tech examples and interactive visuals to make the maths click.</p>
+  <div class="meta-row">
+    <span class="badge">Adekunle Ajasin University (AAUA)</span>
+    <span class="badge">Dept. of Computer Science</span>
+    <span class="badge">2025/2026 Session</span>
+    <span class="badge">Lecturer: Prof. S.O. Olatunji</span>
+    <span class="badge">Compiled by APEXHUB</span>
+  </div>
+  <div class="howto">
+    <b>📖 How to use this guide:</b> Tap any <b>"▶ Click to expand"</b> box to reveal worked examples and pseudocode-style workings. Use the sliders and buttons on the interactive diagrams to see how the maths behaves. Jump between topics using the bar at the top, and toggle 🌙 Dark mode if you're reading at night before an exam.
+  </div>
+</div>
+
+<main>
+
+<!-- ================= MODULE 1 ================= -->
+<section class="module" id="m1">
+  <div class="module-tag"><span class="module-num">1</span> Foundations</div>
+  <h2 class="module-title">Introduction to Management Science</h2>
+  <p class="module-desc">What it is, where it came from, and why it matters to a computer scientist.</p>
+
+  <h3 class="subhead"><span class="num">1.1</span>What is Management Science?</h3>
+  <p><b>Management Science (MS)</b> is the application of scientific and mathematical methods to solve business and organisational problems. It focuses on <b>optimization</b>, <b>decision-making</b>, <b>predictive modelling</b>, and <b>simulation</b> — turning messy real-world problems into models a computer or analyst can actually solve.</p>
+
+  <div class="plain">
+    <span class="label">🗣️ Plain English</span>
+    Think of Management Science as "engineering for decisions." Just like a software engineer uses data structures and algorithms to make a program run efficiently, a management scientist uses mathematical models to make a business run efficiently — fewer wasted resources, faster decisions, better outcomes.
+  </div>
+
+  <p>It's a discipline that combines <b>mathematical modelling</b>, <b>statistics</b>, and <b>algorithms</b> to support quantitative decision-making — instead of guessing, you build a model and calculate the best option.</p>
+
+  <h3 class="subhead"><span class="num">1.2</span>Evolution and Importance</h3>
+  <p>Management Science didn't start in a boardroom — it started on a battlefield.</p>
+
+  <div class="svg-wrap">
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-year">1940s — Origins in WWII Logistics</div>
+          <div class="tl-text">Born out of military need: resource allocation, convoy routing, and supply strategy. This is when <b>linear programming</b> was first developed to solve logistics problems under scarcity.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-year">1960s–80s — Rise in Manufacturing & Operations</div>
+          <div class="tl-text">Moved into industry: inventory control, supply chains, and production scheduling. Operations Research (OR) grew rapidly as a business discipline.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot-col"><div class="tl-dot"></div></div>
+        <div class="tl-content">
+          <div class="tl-year">2000s–Present — Integration with Data Science & Computing</div>
+          <div class="tl-text">AI, machine learning, and big data now enhance predictive analytics and real-time decisions. Cloud computing makes large-scale OR solutions possible for any company, not just governments.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p>This timeline is the whole story of the field in one line: <b>military logistics → industrial optimization → data-driven decision-making.</b> Today it's used across finance, logistics, operations, and IT.</p>
+
+  <h3 class="subhead"><span class="num">1.3</span>Intersection with Computer Science</h3>
+  <p>Algorithms and optimization sit at the core of both fields. Management Science gives Computer Science the mathematical models; Computer Science gives Management Science the computing power to actually solve them at scale — in AI, cloud computing, and software engineering.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Management Science</th><th>Computer Science</th></tr>
+    <tr><td>Focuses on optimization &amp; decision-making</td><td>Focuses on algorithms &amp; computation</td></tr>
+    <tr><td>Uses mathematical models</td><td>Uses programming &amp; system design</td></tr>
+    <tr><td>Applications: supply chain, finance, IT</td><td>Applications: AI, networks, software</td></tr>
+  </table>
+  </div>
+  <p><b>Synergy:</b> combining analytical models with computing power is exactly what makes modern AI-driven decision systems possible.</p>
+
+  <h3 class="subhead"><span class="num">1.4</span>Types of Managerial Decisions</h3>
+  <ul>
+    <li><b>Strategic</b> — long-term goals (e.g. launching a new product, entering a new market)</li>
+    <li><b>Tactical</b> — medium-term plans (e.g. choosing a cloud provider, project management)</li>
+    <li><b>Operational</b> — day-to-day operations (e.g. assigning this week's tasks)</li>
+  </ul>
+
+  <div class="card">
+    <b>🎯 Quick Exercise</b> — You're leading a tech startup. Classify each decision:
+    <div id="quiz1"></div>
+  </div>
+
+  <h3 class="subhead"><span class="num">1.5</span>Role of Operations Research (OR)</h3>
+  <p><b>Operations Research</b> is the branch of Management Science that uses maths and statistics to optimize decisions. Its key techniques are <b>Linear Programming</b>, <b>Queuing Theory</b>, <b>Simulation</b>, and <b>Game Theory</b>.</p>
+  <div class="real">
+    <span class="label">💡 Real-Life Example</span>
+    Optimizing server loads in a data centre is a classic OR problem — you're allocating a limited resource (compute capacity) across competing demands (user requests) to minimise cost or latency.
+  </div>
+
+  <h3 class="subhead"><span class="num">1.6</span>Problem-Solving Process in Management Science</h3>
+  <div class="flow">
+    <div class="flow-step">1. Define the Problem<br><span style="font-weight:400;color:var(--muted);">e.g. slow cloud response time</span></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">2. Formulate a Model<br><span style="font-weight:400;color:var(--muted);">mathematical / simulation</span></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">3. Analyse &amp; Optimize<br><span style="font-weight:400;color:var(--muted);">find the best solution</span></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">4. Implement &amp; Monitor<br><span style="font-weight:400;color:var(--muted);">deploy &amp; track results</span></div>
+  </div>
+
+  <h3 class="subhead"><span class="num">1.7</span>Applications in Computer Science</h3>
+  <ul>
+    <li><b>Cloud Computing:</b> resource allocation, load balancing</li>
+    <li><b>Network Optimization:</b> shortest-path routing, bandwidth management</li>
+    <li><b>Software Project Management:</b> PERT/CPM for scheduling</li>
+    <li><b>Cybersecurity:</b> game theory for threat modelling</li>
+  </ul>
+
+  <details>
+    <summary>Case Study — Google's Data Centre Energy Optimization</summary>
+    <div class="details-body">
+      <p><b>Problem:</b> High energy consumption and cooling costs across Google's global data centres.</p>
+      <p><b>Solution:</b> Google combined Operations Research with Machine Learning to dynamically schedule workloads and cooling.</p>
+      <p><b>Approach:</b></p>
+      <ul>
+        <li>Real-time sensor data from servers (temperature, power draw, CPU load)</li>
+        <li>Predictive models built with DeepMind's deep learning tools</li>
+        <li>Cooling parameters optimised using linear programming</li>
+      </ul>
+      <p><b>Outcome:</b> a 40% reduction in cooling energy use and a 15% drop in Power Usage Effectiveness (PUE) — supporting Google's target of 24/7 carbon-free energy by 2030.</p>
+    </div>
+  </details>
+
+  <div class="chip-row">
+    <span class="chip">Amazon — inventory optimization (LP)</span>
+    <span class="chip">Netflix — recommendation decision science</span>
+    <span class="chip">Uber — route optimization &amp; dynamic pricing</span>
+    <span class="chip">Microsoft — cloud resource scheduling</span>
+    <span class="chip">Facebook/Meta — load balancing &amp; traffic prediction</span>
+  </div>
+
+  <h3 class="subhead"><span class="num">1.8</span>Tools &amp; Software</h3>
+  <ul>
+    <li><b>Python libraries:</b> PuLP, SciPy, SimPy</li>
+    <li><b>Spreadsheet tools:</b> Excel Solver</li>
+    <li><b>Simulation software:</b> AnyLogic, Arena</li>
+    <li><b>Visualization:</b> Tableau, Power BI</li>
+  </ul>
+
+  <div class="warnbox">
+    <span class="label">✅ Summary</span>
+    Management Science = Math + Business + Computing. OR techniques optimize IT systems (cloud, networks, projects), and real-world problems require both modelling <i>and</i> data-driven decisions — you can't skip either half.
+  </div>
+</section>
+
+<!-- ================= MODULE 2 ================= -->
+<section class="module" id="m2">
+  <div class="module-tag"><span class="module-num">2</span> Decision-Making</div>
+  <h2 class="module-title">Decision-Making under Certainty and Uncertainty</h2>
+  <p class="module-desc">Choosing the right tool depends entirely on how much you actually know about the future.</p>
+
+  <h3 class="subhead"><span class="num">2.1</span>Decision-Making under Certainty</h3>
+  <p>Here, the outcome of every decision is known and predictable. You can use deterministic mathematical models — like payoff tables and optimization (e.g. Linear Programming) — because there's no guesswork involved.</p>
+  <div class="real">
+    <span class="label">💡 Real-Life Example</span>
+    Choosing the cheapest cloud provider when you already know all the pricing tiers, bandwidth costs, and your exact usage. There's no uncertainty — it's pure calculation.
+  </div>
+
+  <h3 class="subhead"><span class="num">2.2</span>Decision-Making under Uncertainty</h3>
+  <p>Here, outcomes depend on unknown future conditions (like market demand), so you must evaluate multiple possible scenarios. Tools include <b>Decision Trees</b>, <b>Expected Value (EV)</b>, and the <b>Maximin / Maximax / Minimax Regret</b> criteria (covered in full in Module 5).</p>
+  <div class="real">
+    <span class="label">💡 Real-Life Example</span>
+    Investing in a new product without any market research data — you genuinely don't know if it will sell.
+  </div>
+
+  <h3 class="subhead"><span class="num">2.3</span>Worked Example — Launching a New SaaS Product</h3>
+  <p><b>Decision:</b> launch the product or not. <b>States of nature:</b> High Demand (70% probability), Low Demand (30% probability).</p>
+
+  <div class="tbl-wrap payoff-table">
+  <table>
+    <tr><th>Decision</th><th>State of Nature</th><th>Probability</th><th>Payoff</th></tr>
+    <tr><td rowspan="2">Launch</td><td>High Demand</td><td>0.7</td><td>$500,000</td></tr>
+    <tr><td>Low Demand</td><td>0.3</td><td>-$100,000</td></tr>
+    <tr><td>Don't Launch</td><td>—</td><td>—</td><td>$0</td></tr>
+  </table>
+  </div>
+
+  <div class="formula">Expected Value (EV) = (0.7 × 500,000) + (0.3 × -100,000)
+             = 350,000 - 30,000
+             = $320,000
+
+Decision: LAUNCH (EV of launching &gt; EV of not launching, which is $0)</div>
+
+  <p>Below is that same decision shown as a decision tree — the standard way to visualise sequential choices under uncertainty.</p>
+
+  <div class="svg-wrap">
+    <svg viewBox="0 0 620 260" xmlns="http://www.w3.org/2000/svg">
+      <line x1="60" y1="130" x2="180" y2="60" stroke="var(--muted)" stroke-width="2"/>
+      <line x1="60" y1="130" x2="180" y2="200" stroke="var(--muted)" stroke-width="2"/>
+      <rect x="40" y="115" width="30" height="30" fill="var(--accent)"/>
+      <text x="55" y="165" font-size="11" text-anchor="middle">Decision</text>
+
+      <text x="120" y="80" font-size="11">Launch</text>
+      <circle cx="180" cy="60" r="14" fill="var(--warn)"/>
+      <text x="180" y="35" font-size="11" text-anchor="middle">Chance</text>
+      <line x1="194" y1="60" x2="330" y2="20" stroke="var(--muted)" stroke-width="2"/>
+      <line x1="194" y1="60" x2="330" y2="100" stroke="var(--muted)" stroke-width="2"/>
+      <text x="240" y="15" font-size="10">High Demand (0.7)</text>
+      <text x="450" y="24" font-size="12" font-weight="700">$500,000</text>
+      <text x="240" y="98" font-size="10">Low Demand (0.3)</text>
+      <text x="450" y="104" font-size="12" font-weight="700">-$100,000</text>
+
+      <text x="110" y="220" font-size="11">Don't Launch</text>
+      <line x1="60" y1="130" x2="330" y2="200" stroke="var(--muted)" stroke-width="2" stroke-dasharray="4"/>
+      <text x="450" y="204" font-size="12" font-weight="700">$0</text>
+
+      <rect x="330" y="10" width="150" height="26" fill="none" stroke="var(--accent2)" stroke-width="2" rx="6"/>
+      <text x="405" y="27" font-size="10" text-anchor="middle" fill="var(--accent2)">EV = $320,000 ✓ chosen</text>
+    </svg>
+  </div>
+
+  <h3 class="subhead"><span class="num">2.4</span>Takeaways</h3>
+  <ul>
+    <li>Certainty → deterministic models (e.g. Linear Programming)</li>
+    <li>Uncertainty → probabilistic tools (e.g. Expected Value, Decision Trees)</li>
+    <li>Combine data, logic, <i>and</i> intuition — a model is an input to a decision, not a replacement for judgement</li>
+    <li>Machine Learning is powerful, but it isn't always the right tool for the job — use the right model for the right problem</li>
+  </ul>
+</section>
+
+<!-- ================= MODULE 3 ================= -->
+<section class="module" id="m3">
+  <div class="module-tag"><span class="module-num">3</span> Optimization</div>
+  <h2 class="module-title">Linear Programming and Optimization</h2>
+  <p class="module-desc">The single most important tool in this course — used everywhere from cloud billing to CPU scheduling.</p>
+
+  <h3 class="subhead"><span class="num">3.1</span>What is Linear Programming?</h3>
+  <p><b>Linear Programming (LP)</b> is a mathematical technique used to achieve the best outcome (maximum profit, minimum cost, etc.) in a model whose objective and constraints are all linear equations or inequalities.</p>
+  <div class="plain">
+    <span class="label">🗣️ Plain English</span>
+    You have a goal (maximise profit) and a bunch of limits (you only have so many hours, so much RAM, so much budget). LP is the systematic way of finding the exact combination of decisions that squeezes the most value out of those limits — instead of guessing and checking.
+  </div>
+
+  <h3 class="subhead"><span class="num">3.2</span>Structure of an LP Problem</h3>
+  <ul>
+    <li><b>Decision Variables</b> — the things you control (e.g. x and y)</li>
+    <li><b>Objective Function</b> — what you want to maximise or minimise</li>
+    <li><b>Constraints</b> — limitations or requirements (linear inequalities)</li>
+    <li><b>Non-negativity Constraints</b> — decision variables must be ≥ 0 (you can't produce -5 units of anything)</li>
+  </ul>
+
+  <div class="formula">Maximize profit = 5x + 4y
+Subject to:
+  x + 2y ≤ 100
+  3x + y ≤ 90
+  x, y ≥ 0</div>
+
+  <h3 class="subhead"><span class="num">3.3</span>Worked Example — Software Company</h3>
+  <p><b>Scenario:</b> A company produces two software tools, A and B. A brings $40 profit and takes 2 hours of dev time; B brings $30 profit and takes 1 hour. Max dev time available is 100 hours, and at most 40 units of B can be sold.</p>
+
+  <div class="formula">Let x = units of A,  y = units of B
+
+Objective: Maximize Z = 40x + 30y
+Subject to:
+  2x + y ≤ 100   (development time)
+  y ≤ 40         (market limit on B)
+  x, y ≥ 0       (non-negativity)</div>
+
+  <h3 class="subhead"><span class="num">3.4</span>Graphical Solution Method</h3>
+  <p>For a 2-variable LP problem, you can literally draw it:</p>
+  <ol>
+    <li>Plot each constraint on a 2D graph as a line</li>
+    <li>Shade the <b>feasible region</b> — the area satisfying all constraints at once</li>
+    <li>The optimal point always sits on a <b>corner (vertex)</b> of that feasible region — test each corner in the objective function</li>
+  </ol>
+  <p><i>Limitation:</i> this method only works visually for two variables — beyond that you need the Simplex Method or software.</p>
+
+  <p>Using the software company example above (x = units of A, y = units of B):</p>
+
+  <div class="svg-wrap">
+    <svg viewBox="0 0 420 380" xmlns="http://www.w3.org/2000/svg">
+      <line x1="50" y1="330" x2="400" y2="330" stroke="var(--muted)" stroke-width="1.5"/>
+      <line x1="50" y1="330" x2="50" y2="20" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="405" y="335" font-size="11">x (units A)</text>
+      <text x="20" y="20" font-size="11">y (units B)</text>
+
+      <!-- y=40 line -->
+      <line x1="50" y1="190" x2="400" y2="190" stroke="var(--danger)" stroke-width="1.5" stroke-dasharray="5"/>
+      <text x="330" y="185" font-size="10" fill="var(--danger)">y ≤ 40</text>
+
+      <!-- 2x+y=100 -> when y=0,x=50 (scale x*7); when x=0,y=100 -->
+      <line x1="50" y1="30" x2="400" y2="330" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="5"/>
+      <text x="230" y="115" font-size="10" fill="var(--accent)">2x + y ≤ 100</text>
+
+      <!-- feasible region polygon: (0,0)-(0,40)-(30,40)-(50,0) approx using scale x*7,y*2.5 offset -->
+      <polygon points="50,330 50,190 260,190 400,330" fill="var(--accent2)" opacity="0.18"/>
+
+      <!-- optimal point (30,40) -->
+      <circle cx="260" cy="190" r="6" fill="var(--danger)"/>
+      <text x="268" y="185" font-size="10" font-weight="700" fill="var(--danger)">Optimal (30, 40)</text>
+
+      <text x="55" y="345" font-size="9">0</text>
+      <text x="50" y="55" font-size="9" text-anchor="end">100</text>
+      <text x="45" y="194" font-size="9" text-anchor="end">40</text>
+    </svg>
+  </div>
+
+  <div class="warnbox">
+    <span class="label">✅ Result</span>
+    Optimal solution: produce <b>30 units of A</b> and <b>40 units of B</b>, giving a maximum profit of <b>$2,400</b>. This shows the real value of the graphical method — you can literally see why that corner point wins.
+  </div>
+
+  <h3 class="subhead"><span class="num">3.5</span>Worked Example — Cloud VM Allocation (Simplex)</h3>
+  <p><b>Scenario:</b> A cloud provider allocates two VM types. VM1 uses 4GB RAM and earns $10/hour; VM2 uses 2GB RAM and earns $6/hour. Total RAM available is 64GB, and at most 10 VM1s can be sold.</p>
+
+  <details>
+    <summary>See the full formulation and Simplex solution</summary>
+    <div class="details-body">
+      <div class="formula">Decision Variables:
+  x₁ = number of VM1 allocated
+  x₂ = number of VM2 allocated
+
+Objective: Maximize Z = 10x₁ + 6x₂
+Subject to:
+  4x₁ + 2x₂ ≤ 64   (RAM constraint)
+  x₁ ≤ 10          (VM1 max limit)
+  x₁, x₂ ≥ 0
+
+Simplex Method Solution:
+  x₁ (VM1) = 0
+  x₂ (VM2) = 32
+  Maximum Profit Z = $192/hour</div>
+      <p>Even though VM1 earns more per hour, it's more profitable to allocate <i>only VM2s</i> because VM2 uses half the RAM — you can fit far more of them into the 64GB budget. This is a great example of why intuition ("higher price = better") can mislead you, and why you actually run the numbers.</p>
+    </div>
+  </details>
+
+  <h3 class="subhead"><span class="num">3.6</span>Types of LP Problems</h3>
+  <div class="chip-row">
+    <span class="chip">Product mix problems</span>
+    <span class="chip">Diet / nutrition problems</span>
+    <span class="chip">Transportation problems</span>
+    <span class="chip">Assignment / resource allocation problems</span>
+  </div>
+
+  <h3 class="subhead"><span class="num">3.7</span>Guidelines for Formulating LP Models</h3>
+  <ol>
+    <li>Define decision variables clearly</li>
+    <li>Identify the objective function</li>
+    <li>Extract constraints from the word problem</li>
+    <li>Make sure all expressions are linear</li>
+    <li>Include non-negativity conditions</li>
+  </ol>
+
+  <div class="warnbox">
+    <span class="label">⚠️ Common Mistakes</span>
+    Using non-linear expressions, forgetting non-negativity constraints, misinterpreting constraints from the word problem, and incorrectly defining variables. Most marks lost in LP questions come from formulation errors, not maths errors — read the scenario twice before writing anything.
+  </div>
+
+  <h3 class="subhead"><span class="num">3.8</span>Applications in Tech &amp; CS</h3>
+  <ul>
+    <li>Resource allocation in cloud data centres</li>
+    <li>Network flow optimization</li>
+    <li>Load balancing in distributed computing</li>
+    <li>Scheduling processor tasks</li>
+    <li>Optimizing cost vs. performance trade-offs (e.g. CPU usage in cloud platforms)</li>
+    <li>Software testing coverage maximisation</li>
+  </ul>
+
+  <h3 class="subhead"><span class="num">3.9</span>Tools for Solving LP Problems</h3>
+  <ul>
+    <li><b>Manual:</b> graphical method (small problems only)</li>
+    <li><b>Simplex Algorithm</b> (for large problems)</li>
+    <li><b>Software:</b> Excel Solver, Python (PuLP, SciPy.optimize), MATLAB, R, Gurobi</li>
+  </ul>
+</section>
+
+<!-- ================= MODULE 4 ================= -->
+<section class="module" id="m4">
+  <div class="module-tag"><span class="module-num">4</span> Special LP Cases</div>
+  <h2 class="module-title">Transportation and Assignment Models</h2>
+  <p class="module-desc">Both are special forms of Linear Programming — one moves goods, the other matches tasks to workers.</p>
+
+  <h3 class="subhead"><span class="num">4.1</span>Transportation Model</h3>
+  <p><b>Objective:</b> minimise the total cost of distributing goods (or data, or requests) from several sources to several destinations.</p>
+  <ul>
+    <li><b>Supply</b> at each source</li>
+    <li><b>Demand</b> at each destination</li>
+    <li><b>Cost</b> of moving one unit between each source-destination pair</li>
+  </ul>
+  <div class="formula">Minimize Z = Σ Σ Cᵢⱼ · Xᵢⱼ
+
+Cᵢⱼ = cost to transport from source i to destination j
+Xᵢⱼ = quantity shipped from i to j</div>
+  <p><b>Solution methods:</b> Northwest Corner Rule, Least Cost Method, Vogel's Approximation Method (VAM).</p>
+  <div class="real">
+    <span class="label">💡 Real-Life Example</span>
+    Distributing computing workloads across 3 servers to serve 5 groups of users at the lowest possible latency — the "cost" here is network latency instead of shipping cost, but the maths is identical.
+  </div>
+
+  <h3 class="subhead"><span class="num">4.2</span>Assignment Model</h3>
+  <p><b>Objective:</b> assign n agents to n tasks, one-to-one, to minimise total cost or maximise total efficiency. Each agent does exactly one task, and each task goes to exactly one agent.</p>
+  <div class="formula">Minimize Z = Σ Σ Cᵢⱼ · Xᵢⱼ
+
+Xᵢⱼ = 1 if task i is assigned to server j, else 0
+(Balanced problem: number of agents = number of tasks)</div>
+  <p><b>Common algorithm:</b> the <b>Hungarian Method</b>.</p>
+
+  <div class="real">
+    <span class="label">💡 Worked Example</span>
+    Assign 3 jobs to 3 servers to minimise total processing time. Optimal solution: <b>J1 → S1 (GPU)</b>, <b>J2 → S2 (CPU)</b>, <b>J3 → S3 (Hybrid)</b> — total time = 10 + 10 + 10 = <b>30 seconds</b>.
+  </div>
+
+  <h3 class="subhead"><span class="num">4.3</span>Applications in Computer Science / IT</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Application</th><th>How it's used</th></tr>
+    <tr><td>Server Load Balancing</td><td>Assigning incoming requests to servers based on capacity and response time (Transportation model)</td></tr>
+    <tr><td>Data Centre Routing</td><td>Optimal routing of data packets to minimise latency (Assignment model)</td></tr>
+    <tr><td>Cloud Computing</td><td>Distributing workloads across regions based on cost and demand</td></tr>
+    <tr><td>Software Deployment</td><td>Assigning build/test tasks to available CI/CD pipelines</td></tr>
+  </table>
+  </div>
+
+  <details>
+    <summary>Real-world tech examples</summary>
+    <div class="details-body">
+      <p><b>Server Load Balancing:</b> cloud providers like AWS and Azure use variants of the Hungarian Algorithm to route traffic efficiently, balancing latency, energy use, and current load against server capacity and QoS requirements.</p>
+      <p><b>Data Centre Routing:</b> Google's B4 software-defined network (SDN) uses similar assignment-style models for traffic engineering — matching data packets to network paths to minimise congestion and maximise throughput.</p>
+    </div>
+  </details>
+
+  <h3 class="subhead"><span class="num">4.4</span>Algorithms &amp; Tools</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Transportation</th><th>Assignment</th></tr>
+    <tr><td>Northwest Corner Rule</td><td>Hungarian Algorithm</td></tr>
+    <tr><td>Vogel's Approximation Method</td><td>Auction Algorithm</td></tr>
+    <tr><td>Linear Programming (Simplex)</td><td>Python: <code>scipy.optimize.linear_sum_assignment</code></td></tr>
+  </table>
+  </div>
+</section>
+
+<!-- ================= MODULE 5 ================= -->
+<section class="module" id="m5">
+  <div class="module-tag"><span class="module-num">5</span> Strategy Under Uncertainty</div>
+  <h2 class="module-title">Decision Analysis and Game Theory</h2>
+  <p class="module-desc">What to do when you're not sure what will happen — and what to do when someone else is deciding too.</p>
+
+  <h3 class="subhead"><span class="num">5.1</span>Overview of Decision Analysis</h3>
+  <p><b>Decision Analysis</b> is a structured approach to making decisions under uncertainty or risk, using quantitative methods to evaluate options and choose the best course of action.</p>
+  <ul>
+    <li><b>Decision Alternatives</b> — the courses of action available</li>
+    <li><b>States of Nature</b> — future events outside your control that affect the outcome</li>
+    <li><b>Payoffs</b> — the outcome (profit, cost, utility) for each decision × state-of-nature pair</li>
+    <li><b>Decision Criteria</b> — the rule you use to pick an alternative</li>
+  </ul>
+
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Environment</th><th>Characteristics</th></tr>
+    <tr><td>Certainty</td><td>Only one state of nature; outcome is known</td></tr>
+    <tr><td>Risk</td><td>Probabilities are assigned to each state of nature</td></tr>
+    <tr><td>Uncertainty</td><td>No reliable probabilities are available</td></tr>
+  </table>
+  </div>
+
+  <h3 class="subhead"><span class="num">5.2</span>Decision Criteria Under Uncertainty</h3>
+  <p>Try the example below — 3 possible IT investment strategies, 2 possible market states, and see how each decision rule picks a <i>different</i> "best" answer.</p>
+
+  <div class="card">
+    <div class="tbl-wrap payoff-table">
+    <table id="critTable">
+      <tr><th>Strategy</th><th>Good Market</th><th>Bad Market</th></tr>
+      <tr><td>A — Aggressive expansion</td><td>$120k</td><td>-$60k</td></tr>
+      <tr><td>B — Moderate growth</td><td>$70k</td><td>$10k</td></tr>
+      <tr><td>C — Stay put</td><td>$20k</td><td>$20k</td></tr>
+    </table>
+    </div>
+    <div class="quiz-btns">
+      <button class="qbtn" onclick="showCriterion('maximax')">Optimistic (Maximax)</button>
+      <button class="qbtn" onclick="showCriterion('maximin')">Conservative (Maximin)</button>
+      <button class="qbtn" onclick="showCriterion('regret')">Minimax Regret</button>
+    </div>
+    <div id="critResult" class="details-body" style="padding-top:10px; font-size:.85rem;"></div>
+  </div>
+
+  <ul>
+    <li><b>Optimistic (Maximax):</b> assumes the best outcome will happen — pick the alternative with the highest possible payoff. Suits risk-takers.</li>
+    <li><b>Conservative (Maximin):</b> assumes the worst-case scenario — pick the alternative whose <i>worst</i> outcome is the best among all worst outcomes. Suits risk-averse decision-makers.</li>
+    <li><b>Minimax Regret:</b> build a "regret table" (how much you'd wish you'd chosen differently), then pick the alternative with the smallest maximum regret. Useful when the fear of missed opportunity matters.</li>
+  </ul>
+
+  <h3 class="subhead"><span class="num">5.3</span>Tools Used in Decision Analysis</h3>
+  <div class="chip-row">
+    <span class="chip">Decision Trees</span>
+    <span class="chip">Payoff Tables</span>
+    <span class="chip">Expected Value (EV)</span>
+    <span class="chip">Sensitivity Analysis</span>
+    <span class="chip">Utility Theory</span>
+  </div>
+
+  <h3 class="subhead"><span class="num">5.4</span>Decision Trees in Game Theory</h3>
+  <p>A decision tree is a graphical tool for sequential decisions and outcomes. It has three types of nodes:</p>
+  <ul>
+    <li><b>Decision Nodes (□)</b> — a choice controlled by a player</li>
+    <li><b>Chance Nodes (○)</b> — an outcome determined by probability</li>
+    <li><b>Terminal Nodes</b> — final outcomes with a payoff attached</li>
+  </ul>
+  <p>They're used to analyse sequential (extensive form) games, find Nash Equilibria in multi-step settings, and support <b>backward induction</b> — solving the tree from the end backwards. Common applications: bargaining games, entry-deterrence games, and investment decisions under uncertainty.</p>
+
+  <h3 class="subhead"><span class="num">5.5</span>Game Theory Basics</h3>
+  <p><b>Game Theory</b> studies decision-making in competitive environments, built around three ideas: <b>Players</b> (the decision-makers), <b>Strategies</b> (plans of action available to each player), and <b>Payoffs</b> (the rewards from chosen strategies).</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Dimension</th><th>Question</th><th>Types</th></tr>
+    <tr><td>Cooperation</td><td>Can players form binding agreements?</td><td>Cooperative (yes) vs. Non-cooperative (no)</td></tr>
+    <tr><td>Payoff structure</td><td>Is one player's gain another's loss?</td><td>Zero-sum (yes) vs. Non-zero-sum (no)</td></tr>
+    <tr><td>Timing</td><td>Do players act together or in turns?</td><td>Simultaneous vs. Sequential</td></tr>
+  </table>
+  </div>
+
+  <div class="plain">
+    <span class="label">🗣️ Plain English</span>
+    Chess is zero-sum, non-cooperative, and sequential — my win is exactly your loss, we can't team up, and we take turns. Trade negotiations are usually non-zero-sum and can be cooperative — both countries can end up better off (or both worse off) together.
+  </div>
+
+  <h3 class="subhead"><span class="num">5.6</span>The Prisoner's Dilemma</h3>
+  <p>Two suspects are arrested and interrogated separately. Neither knows what the other will choose. Each can either <b>stay silent</b> or <b>betray</b> (confess). This is the single most famous example in Game Theory because it shows how two perfectly rational people can end up making each other worse off.</p>
+
+  <div class="tbl-wrap payoff-table">
+  <table>
+    <tr><th></th><th>B Stays Silent</th><th>B Betrays</th></tr>
+    <tr><td><b>A Stays Silent</b></td><td>A: -1, B: -1</td><td>A: -5, B: 0</td></tr>
+    <tr><td><b>A Betrays</b></td><td>A: 0, B: -5</td><td class="payoff-highlight">A: -3, B: -3</td></tr>
+  </table>
+  </div>
+  <p style="font-size:.8rem;color:var(--muted);">Numbers = years in prison (negative; less negative is better). Highlighted cell = the actual outcome both rational players choose.</p>
+
+  <div class="warnbox">
+    <span class="label">🔑 Key Insights</span>
+    <b>Dominant strategy:</b> both prisoners choose to betray, regardless of what the other does. <b>Nash Equilibrium:</b> mutual betrayal — neither player benefits from changing their choice alone. <b>The paradox:</b> mutual cooperation (both stay silent) would give a <i>better</i> combined outcome, but rational self-interest prevents either player from choosing it.
+  </div>
+
+  <details>
+    <summary>Real-world applications of the Prisoner's Dilemma</summary>
+    <div class="details-body">
+      <ul>
+        <li>Business competition — price wars, where undercutting a competitor is individually rational but collectively destructive</li>
+        <li>International relations — arms races, where both sides would be better off disarming together but neither trusts the other to do it first</li>
+        <li>Environmental policy — overfishing and pollution, where individually rational resource use leads to collective harm</li>
+      </ul>
+    </div>
+  </details>
+
+  <h3 class="subhead"><span class="num">5.7</span>Representation of Games</h3>
+  <ul>
+    <li><b>Normal Form:</b> a payoff matrix showing strategies and outcomes (as above)</li>
+    <li><b>Extensive Form:</b> a decision tree showing sequential moves</li>
+    <li><b>Characteristic Function Form:</b> used for cooperative games</li>
+  </ul>
+
+  <h3 class="subhead"><span class="num">5.8</span>Applications of Game Theory in CS</h3>
+  <div class="chip-row">
+    <span class="chip">Network routing protocols</span>
+    <span class="chip">Cybersecurity strategy</span>
+    <span class="chip">Auction algorithms (Google Ad Auctions)</span>
+    <span class="chip">Load balancing &amp; distributed systems</span>
+    <span class="chip">AI agent interaction in multi-agent systems</span>
+  </div>
+</section>
+
+<!-- ================= MODULE 6 ================= -->
+<section class="module" id="m6">
+  <div class="module-tag"><span class="module-num">6</span> Predictive Tools</div>
+  <h2 class="module-title">Forecasting Techniques</h2>
+  <p class="module-desc">Using history to make an educated guess about tomorrow.</p>
+
+  <h3 class="subhead"><span class="num">6.1</span>What is Forecasting?</h3>
+  <p><b>Forecasting</b> means predicting future values based on historical data. It's vital for decisions in operations, inventory, and IT infrastructure planning.</p>
+  <ul>
+    <li><b>Qualitative</b> — expert judgement (used when there's little or no historical data)</li>
+    <li><b>Quantitative</b> — time series and causal models (used when historical data exists)</li>
+  </ul>
+
+  <h3 class="subhead"><span class="num">6.2</span>Time Series Analysis</h3>
+  <p>A <b>time series</b> is a sequence of data points recorded over time (daily, weekly, monthly). It's usually made up of four components:</p>
+  <ul>
+    <li><b>Trend</b> — the long-term direction</li>
+    <li><b>Seasonality</b> — recurring, predictable patterns</li>
+    <li><b>Cyclicality</b> — longer-term economic cycles</li>
+    <li><b>Noise</b> — pure randomness that can't be modelled away</li>
+  </ul>
+  <p><i>Common tools:</i> Pandas <code>Series.plot()</code> or an Excel line graph.</p>
+
+  <h3 class="subhead"><span class="num">6.3</span>Moving Averages</h3>
+  <p>Moving averages smooth out noisy data by averaging over a rolling time window.</p>
+  <div class="formula">Simple Moving Average:  SMAₜ = (1/n) × Σ Yₜ₋ᵢ
+
+Types: Simple Moving Average (SMA), Weighted Moving Average (WMA)
+Tools: Excel =AVERAGE(), Python rolling().mean()</div>
+
+  <h3 class="subhead"><span class="num">6.4</span>Exponential Smoothing</h3>
+  <p>A weighted average that gives more weight to recent data than older data.</p>
+  <div class="formula">Sₜ = α·Yₜ + (1 - α)·Sₜ₋₁
+
+α (alpha) = smoothing factor, between 0 and 1
+Types: Single, Double, Holt-Winters
+Tools: Excel ToolPak, Python statsmodels</div>
+
+  <div class="card">
+    <b>🎛️ Try it — Exponential Smoothing vs. Moving Average</b>
+    <p style="font-size:.85rem;color:var(--muted);margin-top:4px;">This is simulated daily CPU utilisation (%) for a university data centre over two weeks. Drag the sliders to see how the smoothing factor α and the moving-average window change how closely each method tracks (or ignores) the noisy raw data.</p>
+    <div class="control-row">
+      <label>α (exp. smoothing)</label>
+      <input type="range" id="alphaSlider" min="0.05" max="0.95" step="0.05" value="0.3">
+      <span class="val-pill" id="alphaVal">0.30</span>
+    </div>
+    <div class="control-row">
+      <label>Window (moving avg)</label>
+      <input type="range" id="windowSlider" min="2" max="7" step="1" value="3">
+      <span class="val-pill" id="windowVal">3</span>
+    </div>
+    <div class="svg-wrap"><svg id="forecastChart" viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg"></svg></div>
+    <div class="legend">
+      <span><span class="dot" style="background:#8a8a9a;"></span>Actual CPU usage</span>
+      <span><span class="dot" style="background:var(--accent);"></span>Exponential smoothing</span>
+      <span><span class="dot" style="background:var(--accent2);"></span>Moving average</span>
+    </div>
+  </div>
+
+  <h3 class="subhead"><span class="num">6.5</span>Tools for Forecasting</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Category</th><th>Tools</th></tr>
+    <tr><td>Spreadsheet</td><td>Excel built-in formulas, charts, and the ToolPak add-in</td></tr>
+    <tr><td>Python</td><td>Pandas (<code>rolling()</code>, <code>shift()</code>); Statsmodels (<code>SimpleExpSmoothing</code>, <code>Holt</code>, <code>seasonal_decompose</code>)</td></tr>
+    <tr><td>ML/AI platforms</td><td>DataRobot, H2O.ai, Amazon Forecast, Google Vertex AI, Azure Machine Learning</td></tr>
+  </table>
+  </div>
+
+  <details>
+    <summary>Case Study — Predicting IT System Usage</summary>
+    <div class="details-body">
+      <p><b>Scenario:</b> a university data centre needs to forecast computing resource demand, using daily CPU utilisation data over 12 months.</p>
+      <p><b>Approach:</b> apply SMA and Exponential Smoothing in Python, forecast future demand to optimise resource allocation, then compare against machine-learning approaches.</p>
+      <p><b>Interpretation:</b> compare the forecast against actual usage, identify peak-demand periods, and use the results to inform server scaling, load balancing, and budget planning decisions.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ================= MODULE 7 ================= -->
+<section class="module" id="m7">
+  <div class="module-tag"><span class="module-num">7</span> Intelligent Systems</div>
+  <h2 class="module-title">Decision Support Systems (DSS) and AI/ML</h2>
+  <p class="module-desc">Where Management Science meets modern AI — systems that help (or automatically make) decisions.</p>
+
+  <h3 class="subhead"><span class="num">7.1</span>What is a Decision Support System?</h3>
+  <p>A <b>DSS</b> is an interactive, computer-based system that aids data-driven decisions. Its purpose is to solve <b>semi-structured or unstructured</b> business problems — the kind that don't have one obvious, purely mechanical answer.</p>
+  <div class="plain">
+    <span class="label">🗣️ Plain English</span>
+    A DSS integrates Data + Models + a User Interface (plus AI, in modern systems) — think of it as the dashboard a manager uses to actually see and act on the results of all the models in this course, instead of running the maths by hand every time.
+  </div>
+
+  <h3 class="subhead"><span class="num">7.2</span>Components of a DSS</h3>
+  <div class="dss-grid">
+    <div class="dss-box"><h4>Data Management</h4><p>Databases, data warehouses. <br><i>Example: sales records, customer data.</i></p></div>
+    <div class="dss-box"><h4>Model Management</h4><p>Algorithms, statistical models. <br><i>Example: linear programming for logistics.</i></p></div>
+    <div class="dss-box"><h4>User Interface</h4><p>Dashboards, visualisation tools (e.g. Power BI). <br><i>Example: interactive reports.</i></p></div>
+    <div class="dss-box"><h4>Knowledge Engine</h4><p>AI/ML models, expert systems. <br><i>Example: fraud detection rules.</i></p></div>
+  </div>
+
+  <h3 class="subhead"><span class="num">7.3</span>Types of DSS</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Type</th><th>Focus</th><th>Application Example</th></tr>
+    <tr><td>Data-Driven DSS</td><td>Big data analytics</td><td>Retail demand forecasting</td></tr>
+    <tr><td>Model-Driven DSS</td><td>Mathematical models</td><td>Supply chain optimization</td></tr>
+    <tr><td>Knowledge-Driven DSS</td><td>AI / rule-based systems</td><td>Medical diagnosis (IBM Watson)</td></tr>
+    <tr><td>Communication-Driven DSS</td><td>Team collaboration</td><td>Virtual project planning tools</td></tr>
+  </table>
+  </div>
+
+  <h3 class="subhead"><span class="num">7.4</span>AI/ML in Decision-Making</h3>
+  <p>AI enhances DSS in several ways:</p>
+  <ul>
+    <li><b>Automation</b> — handling routine decisions (e.g. inventory restocking)</li>
+    <li><b>Prediction</b> — sales forecasts using neural networks</li>
+    <li><b>Prescription</b> — recommending optimal strategies (e.g. dynamic pricing)</li>
+  </ul>
+  <p><b>Key techniques:</b> Supervised Learning (e.g. churn prediction), NLP (e.g. customer service chatbots), and Reinforcement Learning (e.g. dynamic pricing).</p>
+
+  <h3 class="subhead"><span class="num">7.5</span>AI Applications in IT Service Management (ITSM)</h3>
+  <ul>
+    <li><b>Automated Ticketing</b> — NLP routes IT tickets to the right team automatically</li>
+    <li><b>Predictive Maintenance</b> — forecasts server failures before they happen</li>
+    <li><b>Self-Healing Systems</b> — automatically resolve certain issues without a human</li>
+    <li><b>Chatbots</b> — 24/7 support (e.g. ServiceNow Virtual Agent)</li>
+  </ul>
+  <p><b>Benefits:</b> faster resolutions, cost reduction, and proactive (rather than reactive) problem-solving.</p>
+
+  <details>
+    <summary>Case Study — AI in ITSM (ServiceNow)</summary>
+    <div class="details-body">
+      <ul>
+        <li><b>Virtual Agent</b> resolves around 40% of tier-1 support tickets automatically using NLP</li>
+        <li><b>Predictive Analytics</b> flags outages before they actually occur</li>
+        <li><b>Automated Workflows</b> assign tickets based on urgency without human triage</li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="warnbox">
+    <span class="label">✅ Key Takeaways</span>
+    DSS = Data + Models + UI + AI, working together for better decisions. AI/ML adds automation, prediction, and optimization on top of the traditional DSS structure, and intelligent agents are transforming ITSM through real efficiency and cost savings.
+  </div>
+</section>
+
+<!-- ================= EXAM PREP ================= -->
+<section class="module" id="exam">
+  <div class="module-tag"><span class="module-num">📋</span> Revision</div>
+  <h2 class="module-title">Likely Exam Questions &amp; Model Answers</h2>
+  <p class="module-desc">Predicted from the structure and emphasis of the course material — use these to test yourself, not just to read passively.</p>
+
+  <div class="card exam-card">
+    <span class="exam-tag">Likely Question · Module 1 &amp; 3</span>
+    <p><b>Q: Define Management Science and explain how Operations Research relates to it, using one CS example.</b></p>
+    <p>Management Science is the application of scientific methods to solve business and organisational problems, focused on optimization, decision-making, predictive modelling, and simulation. Operations Research is the specific branch of Management Science that uses mathematical and statistical techniques — like Linear Programming, Queuing Theory, and Game Theory — to actually solve those optimization problems. Example: using Linear Programming to optimise server resource allocation in a cloud data centre, balancing cost against performance.</p>
+  </div>
+
+  <div class="card exam-card">
+    <span class="exam-tag">Likely Question · Module 2</span>
+    <p><b>Q: Differentiate between decision-making under certainty and under uncertainty, with an IT example for each.</b></p>
+    <p>Under certainty, the outcome of each decision is known in advance, so deterministic models like Linear Programming apply — e.g. choosing the cheapest cloud provider once all prices are known. Under uncertainty, outcomes depend on unknown future conditions, so probabilistic tools like Expected Value and Decision Trees are used instead — e.g. deciding whether to launch a new SaaS product without knowing future demand.</p>
+  </div>
+
+  <div class="card exam-card">
+    <span class="exam-tag">Likely Question · Module 3</span>
+    <p><b>Q: Formulate an LP model for the following: A cloud provider allocates VM1 (4GB RAM, $10/hr) and VM2 (2GB RAM, $6/hr) with 64GB total RAM and a maximum of 10 VM1s sellable. State the objective and constraints.</b></p>
+    <div class="formula">Let x₁ = VM1 allocated, x₂ = VM2 allocated
+Maximize Z = 10x₁ + 6x₂
+Subject to:
+  4x₁ + 2x₂ ≤ 64
+  x₁ ≤ 10
+  x₁, x₂ ≥ 0</div>
+  </div>
+
+  <div class="card exam-card">
+    <span class="exam-tag">Likely Question · Module 4</span>
+    <p><b>Q: What is the key difference between the Transportation Model and the Assignment Model? Give one CS application of each.</b></p>
+    <p>The Transportation Model distributes goods (or workloads) from multiple sources to multiple destinations to minimise total cost, and allows partial/multiple allocations. The Assignment Model is a special one-to-one case — each of n agents is matched to exactly one of n tasks — typically solved with the Hungarian Algorithm. Application: Transportation model for server load balancing across data centres; Assignment model for matching jobs to specific servers (e.g. J1→GPU server, J2→CPU server).</p>
+  </div>
+
+  <div class="card exam-card">
+    <span class="exam-tag">Likely Question · Module 5</span>
+    <p><b>Q: Using the Prisoner's Dilemma, explain the concept of Nash Equilibrium and why it can produce a worse outcome for both players.</b></p>
+    <p>A Nash Equilibrium is a state where no player can improve their outcome by changing their strategy alone, given what the other player is doing. In the Prisoner's Dilemma, both players betraying is the Nash Equilibrium — neither prisoner benefits from unilaterally switching to silence. However, if both had stayed silent, they would jointly receive a better outcome (1 year each vs. 3 years each) — showing that individually rational choices can lead to a collectively worse result.</p>
+  </div>
+
+  <div class="card exam-card">
+    <span class="exam-tag">Likely Question · Module 6</span>
+    <p><b>Q: Differentiate between Simple Moving Average and Exponential Smoothing as forecasting techniques.</b></p>
+    <p>A Simple Moving Average gives every observation in the chosen time window equal weight, which smooths out noise but reacts slowly to recent changes. Exponential Smoothing instead assigns more weight to the most recent observation (controlled by the smoothing factor α) and progressively less weight to older data, so it reacts faster to real recent shifts while still smoothing out random noise — this is why it's often preferred for tracking fast-changing metrics like server CPU load.</p>
+  </div>
+
+  <div class="card exam-card">
+    <span class="exam-tag">Likely Question · Module 7</span>
+    <p><b>Q: List and briefly describe the four core components of a Decision Support System.</b></p>
+    <p><b>Data Management</b> — databases and data warehouses holding raw information (e.g. sales records). <b>Model Management</b> — the algorithms and statistical/optimization models applied to that data (e.g. linear programming for logistics). <b>User Interface</b> — dashboards and visualisation tools that let a human interact with the system (e.g. Power BI). <b>Knowledge Engine</b> — AI/ML models or expert-system rules that add intelligence (e.g. fraud detection rules).</p>
+  </div>
+</section>
+
+</main>
+
+<div class="footer-note">
+  CSC 416 — Management Science · Dept. of Computer Science · AAUA · 2025/2026 Session · Lecturer: Prof. S.O. Olatunji<br>
+  Compiled by APEXHUB · Use this guide alongside your lecture notes, not as a replacement for them. Good luck! 🎓
+</div>
+
+<script>
+function toggleDark(){
+  document.body.classList.toggle('dark');
+  const btn = document.getElementById('darkToggle');
+  btn.textContent = document.body.classList.contains('dark') ? '☀️ Light' : '🌙 Dark';
+}
+
+// ---------- Module 1 quiz ----------
+const quizData = [
+  {q:"Choosing your cloud provider", options:["Strategic","Tactical","Operational"], answer:"Tactical",
+   explain:"Mid-level decision aligned with technical strategy but about implementation — affects operations without setting long-term direction."},
+  {q:"Assigning tasks for this week", options:["Strategic","Tactical","Operational"], answer:"Operational",
+   explain:"A short-term, day-to-day decision about executing immediate responsibilities — workflow management, not strategy."},
+  {q:"Deciding whether to enter a new market", options:["Strategic","Tactical","Operational"], answer:"Strategic",
+   explain:"High-level, long-term decision shaping the company's future direction and competitive position, involving major resources and risk."}
+];
+const quiz1 = document.getElementById('quiz1');
+quizData.forEach((item,i)=>{
+  const wrap = document.createElement('div');
+  wrap.style.marginTop = '14px';
+  const p = document.createElement('div');
+  p.style.fontSize = '.88rem';
+  p.style.fontWeight = '600';
+  p.textContent = (i+1)+". "+item.q;
+  wrap.appendChild(p);
+  const btnRow = document.createElement('div');
+  btnRow.className = 'quiz-btns';
+  const explainDiv = document.createElement('div');
+  explainDiv.style.fontSize = '.82rem';
+  explainDiv.style.color = 'var(--muted)';
+  explainDiv.style.marginTop = '6px';
+  item.options.forEach(opt=>{
+    const b = document.createElement('button');
+    b.className = 'qbtn';
+    b.textContent = opt;
+    b.onclick = ()=>{
+      Array.from(btnRow.children).forEach(c=>c.disabled=true);
+      if(opt === item.answer){
+        b.classList.add('correct');
+      } else {
+        b.classList.add('wrong');
+        Array.from(btnRow.children).forEach(c=>{ if(c.textContent===item.answer) c.classList.add('correct'); });
+      }
+      explainDiv.textContent = "✅ "+item.answer+" — "+item.explain;
+    };
+    btnRow.appendChild(b);
+  });
+  wrap.appendChild(btnRow);
+  wrap.appendChild(explainDiv);
+  quiz1.appendChild(wrap);
+});
+
+// ---------- Module 5 decision criteria demo ----------
+const critData = [
+  {name:"A — Aggressive expansion", good:120, bad:-60},
+  {name:"B — Moderate growth", good:70, bad:10},
+  {name:"C — Stay put", good:20, bad:20}
+];
+function showCriterion(type){
+  const result = document.getElementById('critResult');
+  let html = "";
+  if(type==='maximax'){
+    let best = critData.reduce((a,b)=> Math.max(a.good,a.bad) > Math.max(b.good,b.bad) ? a : b);
+    html = "<b>Maximax (Optimistic):</b> look at each strategy's BEST possible payoff, then pick the highest of those.<br>"+
+      critData.map(d=>`${d.name}: best = $${Math.max(d.good,d.bad)}k`).join('<br>')+
+      `<br><br>✅ Chosen: <b>${best.name}</b> (assumes the good market happens)`;
+  } else if(type==='maximin'){
+    let best = critData.reduce((a,b)=> Math.min(a.good,a.bad) > Math.min(b.good,b.bad) ? a : b);
+    html = "<b>Maximin (Conservative):</b> look at each strategy's WORST possible payoff, then pick the highest of those worst cases.<br>"+
+      critData.map(d=>`${d.name}: worst = $${Math.min(d.good,d.bad)}k`).join('<br>')+
+      `<br><br>✅ Chosen: <b>${best.name}</b> (safest if the market turns bad)`;
+  } else {
+    const bestGood = Math.max(...critData.map(d=>d.good));
+    const bestBad = Math.max(...critData.map(d=>d.bad));
+    const regrets = critData.map(d=>({name:d.name, regGood:bestGood-d.good, regBad:bestBad-d.bad}));
+    const withMax = regrets.map(r=>({...r, maxReg:Math.max(r.regGood,r.regBad)}));
+    const best = withMax.reduce((a,b)=> a.maxReg < b.maxReg ? a : b);
+    html = "<b>Minimax Regret:</b> for each state, find the best possible payoff, subtract each strategy's payoff to get its 'regret', then pick the strategy with the smallest maximum regret.<br>"+
+      withMax.map(r=>`${r.name}: regret(good)=$${r.regGood}k, regret(bad)=$${r.regBad}k → max regret = $${r.maxReg}k`).join('<br>')+
+      `<br><br>✅ Chosen: <b>${best.name}</b> (smallest worst-case regret)`;
+  }
+  result.innerHTML = html;
+}
+
+// ---------- Module 6 forecasting chart ----------
+const cpuData = [42,55,48,63,58,70,52,66,60,75,68,80,72,85];
+function computeSMA(data, window){
+  return data.map((v,i)=>{
+    if(i < window-1) return null;
+    let sum=0;
+    for(let k=i-window+1;k<=i;k++) sum+=data[k];
+    return sum/window;
+  });
+}
+function computeExpSmoothing(data, alpha){
+  const out = [data[0]];
+  for(let i=1;i<data.length;i++){
+    out.push(alpha*data[i] + (1-alpha)*out[i-1]);
+  }
+  return out;
+}
+function drawForecastChart(){
+  const alpha = parseFloat(document.getElementById('alphaSlider').value);
+  const win = parseInt(document.getElementById('windowSlider').value);
+  document.getElementById('alphaVal').textContent = alpha.toFixed(2);
+  document.getElementById('windowVal').textContent = win;
+
+  const exp = computeExpSmoothing(cpuData, alpha);
+  const sma = computeSMA(cpuData, win);
+
+  const svg = document.getElementById('forecastChart');
+  const W=640,H=260,padL=36,padR=16,padT=16,padB=28;
+  const n = cpuData.length;
+  const maxV = 100, minV = 0;
+  const xAt = i => padL + (i/(n-1))*(W-padL-padR);
+  const yAt = v => padT + (1-(v-minV)/(maxV-minV))*(H-padT-padB);
+
+  function pathFor(arr){
+    let d = "";
+    let started = false;
+    arr.forEach((v,i)=>{
+      if(v===null || v===undefined) return;
+      const x = xAt(i), y = yAt(v);
+      d += (started? "L":"M") + x.toFixed(1) + "," + y.toFixed(1) + " ";
+      started = true;
+    });
+    return d;
+  }
+
+  let svgContent = "";
+  // axes
+  svgContent += `<line x1="${padL}" y1="${H-padB}" x2="${W-padR}" y2="${H-padB}" stroke="var(--muted)" stroke-width="1"/>`;
+  svgContent += `<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${H-padB}" stroke="var(--muted)" stroke-width="1"/>`;
+  [0,25,50,75,100].forEach(v=>{
+    const y = yAt(v);
+    svgContent += `<text x="${padL-6}" y="${y+3}" font-size="9" text-anchor="end" fill="var(--muted)">${v}</text>`;
+    svgContent += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="var(--border)" stroke-width="1"/>`;
+  });
+  // actual
+  svgContent += `<path d="${pathFor(cpuData)}" fill="none" stroke="#8a8a9a" stroke-width="1.5" stroke-dasharray="3,3"/>`;
+  cpuData.forEach((v,i)=>{ svgContent += `<circle cx="${xAt(i)}" cy="${yAt(v)}" r="2.3" fill="#8a8a9a"/>`; });
+  // exp smoothing
+  svgContent += `<path d="${pathFor(exp)}" fill="none" stroke="var(--accent)" stroke-width="2.2"/>`;
+  // sma
+  svgContent += `<path d="${pathFor(sma)}" fill="none" stroke="var(--accent2)" stroke-width="2.2"/>`;
+  svgContent += `<text x="${W/2}" y="${H-8}" font-size="9" text-anchor="middle" fill="var(--muted)">Day →</text>`;
+
+  svg.innerHTML = svgContent;
+}
+document.getElementById('alphaSlider').addEventListener('input', drawForecastChart);
+document.getElementById('windowSlider').addEventListener('input', drawForecastChart);
+drawForecastChart();
+</script>
+
+</body>
+</html>
